@@ -3,33 +3,54 @@ import React from 'react';
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
 
 import './styles.css';
+import api from '../../services/api';
 
-function TeacherItem() {
+export interface Teacher {
+  id: number,
+  subject: string,
+  cost: number,
+  name: string,
+  avatar: string,
+  whatsapp: string,
+  bio: string
+}
+
+export interface TeacherItemProps {
+  teacher: Teacher
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  function createNewConnection() {
+    api.post('connections', {
+      user_id: teacher.id
+    });
+  }
   return (
     <article className="teacher-item">
       <header>
-        <img src="https://avatars3.githubusercontent.com/u/32724000?s=460&u=9d601b606b06effe5fbb48e668e693af158804e8&v=4" alt="Luiz Gustavo" />
+        <img src={teacher.avatar} alt={teacher.name} />
         <div>
-          <strong>Luiz Gustavo</strong>
-          <span>Matemática</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
 
-      <p>
-        Um exímio pensador de piadas ruins.
-        <br /><br />
-        Adora as matérias de exatas, tendo uma paixão especial por computação e matemática aplicada.
-      </p>
+      <p>{teacher.bio}</p>
 
       <footer>
         <p>
           Preço/hora
-          <strong>R$ 30,00</strong>
+          <strong>R$ {teacher.cost}</strong>
         </p>
-        <button type="button">
+        <a
+          onClick={createNewConnection}
+          href={`https://wa.me/${teacher.whatsapp}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src={whatsappIcon} alt="Whatsapp" />
-            Entrar em contato
-          </button>
+          Entrar em contato
+        </a>
       </footer>
     </article>
   )
