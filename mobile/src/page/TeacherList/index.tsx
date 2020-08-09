@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Text, TextInput } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
